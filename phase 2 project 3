@@ -1,0 +1,135 @@
+To Develop an E-learning Application Using TDD with TestNG.
+package com.app.TDD.demo;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class ApplicationSearch {
+	
+private Map<String, Integer> getapplicationdata() {
+		
+		Map<String, Integer> applicationMap = new HashMap<>();
+		applicationMap.put("Selenium", 10);
+		applicationMap.put("Cucumber", 25);
+		applicationMap.put("jmeter", 20);
+		applicationMap.put("testing", 50);
+		
+
+		return applicationMap;
+	}
+	
+	public int getapplication(String courses) {
+		
+		Map<String, Integer> applicationMap = null ;
+		int count =0;
+		
+		if(courses.isEmpty())
+		{
+			throw new NullPointerException("course name cannot be empty");
+		}
+		applicationMap = getapplicationdata();
+		
+		if(!applicationMap.containsKey(courses))
+		{
+			throw new NullPointerException("course name doesnot exist");
+		}
+		else {
+		count = applicationMap.get(courses);
+		}
+		return count;
+		
+	}
+
+}
+//Elearning
+package com.app.TDD.demo;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
+public class ElearningTest {
+	public static void main(String[] args) throws InterruptedException
+	{
+		ChromeOptions options = new ChromeOptions();
+		 WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		
+		 driver.manage().deleteAllCookies();
+				
+		 driver.get(" https://www.simplilearn.com/");
+		 driver.findElement(By.xpath("//a[text()=' Log in']")).click();
+		 Thread.sleep(5000);
+	}
+}
+//Testapplication
+package com.app.TDD.demo;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+public class TestApplication {
+	@Test
+	public void findapplication()
+	{
+		
+		String courses = "Selenium";
+		int Expectedvideos = 10;
+		ApplicationSearch as = new ApplicationSearch();
+		
+		// number of people in the city
+		
+		int count = as.getapplication(courses);
+		
+		System.out.println(count);
+		
+		Assert.assertEquals(count, Expectedvideos);
+		
+	}
+	
+	@Test
+	public void findapplicationEmptyInput()
+	{
+		try {
+		String courses = "";
+		int Expectedvideos = 0;
+		ApplicationSearch as = new ApplicationSearch();
+		
+		// number of people in the city
+		
+		int count = as.getapplication(courses);
+		}
+		
+		catch(NullPointerException e)
+		{
+			System.out.println("Course name cannot be empty");
+		}
+		
+		
+	}
+	
+	@Test
+	public void findapplicationInvalidInput()
+	{
+		try {
+		String courses = "Cucumber";
+		int Expectedvideos =  25;
+		ApplicationSearch as = new ApplicationSearch();
+		
+		// number of people in the city
+		
+		int count = as.getapplication(courses);
+		}
+		
+		
+		catch(NullPointerException e1)
+		{
+			System.out.println("Courses name doesnot exisit in the list");
+		}
+		
+		
+	}
+	
+	
+}
