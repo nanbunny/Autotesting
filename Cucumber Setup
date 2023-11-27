@@ -1,0 +1,57 @@
+Cucumber project in Eclipse
+Open the Project Wizard
+Select Default workspace. 
+You will be on Archtype wizard. In filter add this archetype : maven-archetype-quickstart
+Select the artifact with id as 1.4 or any version for group id should be org.apache.maven.archetypes
+Press Next
+Give groupid and artifact ID as same
+Lesson5-CucumberDemo
+Click on finsh button and then downloading will start
+Wait for some time and it will prompt for giving Y
+Give Y and enter key
+Build will be success.
+Open the Pom.xml file and remove the Junit dependency
+Now add the below cucumber, selenium and junit. Testing depenecies
+<dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+   <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-java -->
+<dependency>
+    <groupId>io.cucumber</groupId>
+    <artifactId>cucumber-java</artifactId>
+    <version>7.10.1</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-java -->
+<dependency>
+    <groupId>io.cucumber</groupId>
+    <artifactId>cucumber-junit</artifactId>
+    <version>7.10.1</version>
+    <scope>test</scope>
+</dependency>
+<!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-java -->
+<dependency>
+    <groupId>io.cucumber</groupId>
+    <artifactId>cucumber-core</artifactId>
+    <version>7.10.1</version>
+</dependency>
+   <dependency>
+    <groupId>org.seleniumhq.selenium</groupId>
+    <artifactId>selenium-java</artifactId>
+    <version>4.11.0</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
+<dependency>
+    <groupId>io.github.bonigarcia</groupId>
+    <artifactId>webdrivermanager</artifactId>
+    <version>5.4.1</version>
+</dependency>
+Download Cucumber Plugin for Eclipse
+Go to Help on the eclipse
+Go to Eclipse Market Place and search for cucumber plugin
+Click on install button to install the plugin.
+Convert Maven project to Cucumber Project
+Right click on the project  go to configure  click on convert to cucumber project
