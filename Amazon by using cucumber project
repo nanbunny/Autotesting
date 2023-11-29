@@ -1,0 +1,129 @@
+StepDefination.java:
+package steps;
+import java.time.Duration;
+import org.junit.Before;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+
+public class Functionality_Amazon{
+		 WebDriver driver;
+		 
+		 
+//		  @Before
+//		    public void setUp() {
+//		        // Initialize the WebDriver before each scenario
+//		        driver =  new ChromeDriver();
+//		    }
+	
+		
+		@Given("the user is on the Amazon homepage")
+		public void amazon_homepage(){
+		driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+		driver.get("https://www.amazon.in/");	
+		}
+		
+		  @Before
+		    public void setUp() {
+		        // Initialize the WebDriver before each scenario
+		        driver =  new ChromeDriver();
+		    }
+  	@Then("the user clicks on the account link")
+		public void the_user_clicks_on_the_account_link() throws InterruptedException {
+		driver.findElement(By.xpath("//a[@id='nav-link-accountList']")).click();
+		}
+		@And("enters the phone number {string} and clicks continue")
+		public void enters_the_phone_number_and_clicks_continue(String string) {
+		driver.findElement(By.xpath("//input[@id='ap_email']")).sendKeys("Your Email OR Phone number");
+		driver.findElement(By.xpath("//input[@id='continue']")).click();
+		}
+		@And("enters the password {string} and clicks sign in")
+		public void enters_the_password_and_clicks_sign_in(String string) {
+		driver.findElement(By.xpath("//input[@id='ap_password']")).sendKeys("Your Password");
+		
+		driver.findElement(By.xpath("//input[@id='signInSubmit']")).click();
+		}
+		
+		@Then("the user is logged in successfully")
+		public void the_user_is_logged_in_successfully() {
+		System.out.println("succesfull signin");
+		}
+		@When("the user selects a valid category")
+		public void the_user_selects_a_valid_category() {
+		WebElement e2 = driver.findElement(By.xpath("//select[@id='searchDropdownBox']"));
+		e2.click();
+		Select obj = new Select(e2);
+		obj.selectByIndex(14);
+		}
+		@And("enters {string} in the search box")
+		public void enters_in_the_search_box(String string) {
+		driver.findElement(By.xpath("//input[@id='twotabsearchtextbox']")).sendKeys("I phone 13");
+		}
+    @And("clicks the search button")
+		public void clicks_the_search_button() {
+		driver.findElement(By.xpath("//input[@id='nav-search-submit-button']")).click();
+		System.out.println("product searched");
+		}
+		
+		@When("the user selects the first product from the search results")
+		public void the_user_selects_the_first_product_from_the_search_results() {
+		WebElement e3=driver.findElement(By.xpath("//a[@class='a-link-normal s-underline-text s-underline-link-text s-link-style a-text-normal'][1]"));
+		e3.click();
+		}
+		
+		@And("Driver to new pointer")
+		public void pointer() {
+		for (String handle : driver.getWindowHandles()) {
+	    	driver.switchTo().window(handle);
+			}
+		}
+		
+		//Product added to wish list
+		@When("adds the product to the wishlist")
+		public void adds_the_product_to_the_wishlist() throws InterruptedException {
+		driver.findElement(By.xpath("//div[@id='add-to-wishlist-button-group']")).click();
+		}
+		
+		@Then("close the browser")
+		public void close_the_browser() {
+		driver.quit();
+		}
+}
+Feature File:
+Feature: Amazon Product Wishlist
+  Scenario: User logs in and adds a product to the wishlist
+    Given the user is on the Amazon homepage
+    Then the user clicks on the account link
+    And enters the phone number "Your phone number" and clicks continue
+    And enters the password "Password" and clicks sign in
+    Then the user is logged in successfully
+    When the user selects a valid category
+    And enters "I phone 13" in the search box
+    And clicks the search button
+    When the user selects the first product from the search results
+    And Driver to new pointer 
+    When adds the product to the wishlist
+    And close the browser
+
+TestRunner.java:
+package runner;
+import org.junit.runner.RunWith;
+import io.cucumber.junit.Cucumber;
+import io.cucumber.junit.CucumberOptions;
+@RunWith(Cucumber.class)
+@CucumberOptions(
+			features="C:\\Users\\nandu\\eclipse-workspace\\Amazon_Cucumber_Project\\src\\test\\java\\feature\\func_check.feature",
+			glue = { "steps" },dryRun = false, plugin = { "pretty", "html:target/cucumberreportpass.html" }
+			
+				)
+public class TestRunner {
+}
