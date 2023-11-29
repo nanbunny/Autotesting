@@ -1,0 +1,79 @@
+package com.app.automation.junit;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class FacebookViaJunit {
+
+
+	    WebDriver driver;
+	    
+	    @BeforeEach
+	    public void setUp() {
+	        // Initialize ChromeDriver
+	        driver = new ChromeDriver();
+	    }
+
+	    @Test
+	    public void testFacebookLogin() throws InterruptedException {
+	      WebDriver driver=new ChromeDriver();
+	      driver.manage().window().maximize();
+		  driver.get("https://www.facebook.com/");
+		  
+		  WebElement usernameInput = driver.findElement(By.xpath("//input[@id='email']"));
+		  usernameInput.sendKeys("Your email");
+		  Thread.sleep(2000);
+	      WebElement passwordInput = driver.findElement(By.xpath("//input[@id='pass']"));
+	      passwordInput.sendKeys("Your pass");
+	      Thread.sleep(2000);
+	      WebElement loginButton = driver.findElement(By.xpath("//button[@name='login']"));
+	      loginButton.click();
+	      WebElement text = driver.findElement(By.xpath("//div[@class='x78zum5 xdt5ytf x1iyjqo2 x1n2onr6'][1]/descendant::div[@data-visualcompletion='ignore-dynamic'][1]"));
+	      String actualText = text.getText();
+	      System.out.println( actualText);
+
+	      String expectedText = "Chandaluru Nandakishore";
+	      assertEquals(expectedText, actualText);
+
+	    }
+	    
+	    @AfterEach
+	    public void tearDown() {
+	        // Close the browser
+	        driver.quit();
+	    }
+	}
+POM.XML FILE
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>JunitAutomationProject</groupId>
+  <artifactId>JunitAutomationProject</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <dependencies>
+	  <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+<dependency>
+    <groupId>org.junit.jupiter</groupId>
+    <artifactId>junit-jupiter-api</artifactId>
+    <version>5.9.3</version>
+    <scope>test</scope>
+</dependency>
+<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>4.11.0</version>
+		</dependency>
+		<!--
+		https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
+		<dependency>
+			<groupId>io.github.bonigarcia</groupId>
+			<artifactId>webdrivermanager</artifactId>
+			<version>4.4.3</version>
+		</dependency>
+  </dependencies>
+</project>
